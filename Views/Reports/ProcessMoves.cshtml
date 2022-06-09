@@ -1,0 +1,54 @@
+﻿@{
+    System.Data.DataRowCollection moves = (System.Data.DataRowCollection)ViewData["moves"];
+    string type;
+}
+<script>
+    function Calendar()
+    {
+        $(".date").datepicker({ dateFormat: "dd-mm-yy" });
+    }
+    $(document).ready(Calendar)
+
+    //$.ready(function () {$(".date").datepicker({ dateFormat: "dd-mm-yy" }) })
+
+
+</script>
+<form method="post">
+    <input type="text" name="startDate" class="date" value="@ViewData["startDate"]" />
+    <input type="text" name="endDate" class="date" value="@ViewData["endDate"]" />
+    <input type="submit" value="TAMAM" />
+</form>
+<table>
+    <thead>
+        <tr>
+            <td>Üye Adı soyadı</td>
+            <td>Kitap Adı</td>
+            <td>İşlem Tarihi</td>
+            <td>işlem tipi</td>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Models.Library.MovesRow movesRow in moves)
+        {
+
+            if (movesRow.Type == true)
+            {
+                type = "Kiralama";
+            }
+            else
+            {
+                type = "geri alma";
+            }
+            <tr>
+                <td>
+                    @movesRow.memberName @movesRow.Surname
+                </td>
+                <td>@movesRow.Name</td>
+                <td>@movesRow.Date.ToString("dd-MM-yyyy")</td>
+                <td>@type</td>
+            </tr>
+        }
+    </tbody>
+</table>

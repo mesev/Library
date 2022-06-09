@@ -1,0 +1,32 @@
+﻿@{ 
+    System.Data.DataRowCollection rentals = (System.Data.DataRowCollection)ViewData["rentals"];
+    string delay;
+    int latency;
+    
+    foreach(Library.Models.Library.RentalsRow rentalRow in rentals)
+    {
+        delay = "";
+        latency = (DateTime.Today - rentalRow.DeadLine).Days;
+        if (latency >0)
+        {
+            delay = latency.ToString() + "gün ₺" + (latency * .50).ToString("F2");
+        }
+        <tr>
+            <td>
+               @rentalRow.Member.ToString()
+            </td>
+            <td>
+                @rentalRow.MemberName @rentalRow.MemberSurname
+            </td>
+            <td>
+                @rentalRow.RentedOn.ToString("dd-MM-yyyy")
+            </td>
+            <td>@rentalRow.DeadLine.ToString("dd-MM-yyyy")</td>
+            <td style="color:red">@delay</td>
+            <td>
+                <input type="checkbox" name="member" onclick="changed(this)" value="@rentalRow.Member.ToString()"/>
+            </td>
+        </tr>
+    }
+}
+

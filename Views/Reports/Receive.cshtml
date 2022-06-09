@@ -1,0 +1,32 @@
+﻿
+@{
+    System.Data.DataRowCollection receiveRow = (System.Data.DataRowCollection)ViewData["receiveRow"];
+}
+
+<table>
+    <thead>
+        <tr>
+            <td>Üye adı soyadı</td>
+            <td>Kitap Id</td>
+            <td>Kitap adı</td>
+            <td>Alınma tarihi</td>
+            <td> DeadLine</td>
+            <td>Stok</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Library.Models.Library.ReceiveRow receiveRow1 in receiveRow)
+            {
+            <tr>
+                <td>@receiveRow1.MemberName @receiveRow1.Surname </td>
+                <td>@receiveRow1.Id</td>
+                <td>@receiveRow1.Name</td>
+                <td>@receiveRow1.RentedOn.ToString("dd-MM-yyyy")</td>
+                <td>@receiveRow1.DeadLine.ToString("dd-MM-yyyy")</td>
+                <td>@receiveRow1.ActiveStock.ToString()</td>
+
+            </tr>
+            }
+    </tbody>
+</table>
+

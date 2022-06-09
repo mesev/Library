@@ -1,0 +1,24 @@
+﻿@{
+    System.Data.DataRowCollection books = (System.Data.DataRowCollection)ViewData["books"];
+
+}
+<table style="border:solid 1px black">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kitap</th>
+        </tr>
+
+    </thead>
+    @foreach (Library.Models.Library.BooksRow booksRow in books)
+            {
+                <tr>
+                    <td>
+                       @booksRow.id.ToString()
+                    </td>
+                    <td>
+                        @booksRow.BooksName
+                    </td>
+                </tr>
+            }
+</table>

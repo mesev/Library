@@ -1,0 +1,38 @@
+﻿@{
+    System.Data.DataRowCollection bookload = (System.Data.DataRowCollection)ViewData["bookLoad"];
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<thead>
+    <tr>
+        <th>Üye adı soyadı</th>
+        <th>Mail</th>
+        <th>phone</th>
+        <th>book id</th>
+        <th>rented on</th>
+        <th>deadLine</th>
+        <th>stok</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (Library.Models.Library.ReceiveRow receiveRow1 in bookload)
+    {
+        <tr>
+            <td>@receiveRow1.MemberName @receiveRow1.Surname</td>
+
+            <td>
+                <a href="mailto:@receiveRow1.EMail">@receiveRow1.EMail</a>
+            </td>
+
+            <td>
+                <a href="tel:@receiveRow1.Phone">@receiveRow1.Phone</a>
+            </td>
+
+            <td>@receiveRow1.Id</td>
+            <td>@receiveRow1.RentedOn.ToString("dd-MM-yyyy")</td>
+            <td>@receiveRow1.DeadLine.ToString("dd-MM-yyyy")</td>
+            <td>@receiveRow1.ActiveStock.ToString()</td>
+        </tr>
+    }
+</tbody>

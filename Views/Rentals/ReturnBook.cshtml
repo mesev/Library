@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "ReturnBook";
+  
+}
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function LoadBook()
+    {
+        var idBook = document.getElementById("bookId");
+         $("#bookTable").load("@Url.Action("BookData","Books")/" + idBook.value);
+         $("#rentalsTable").load("@Url.Action("CurrentRentals","Rentals")/" + idBook.value);
+    }
+</script>
+<script>
+    function changed(termsCheckBox)
+    {
+        if (termsCheckBox.checked)
+        {
+            document.getElementById("button").disabled = false;
+        }
+        else
+        {
+            document.getElementById("button").disabled = true;
+        }
+    }
+</script>
+<form action="~/rentals/processreturn" method="post">
+    <input type="number" name="bookId" id="bookId" data-val="true" data-val-required="Bu alan gerekli" />
+    <span class="field-validation-valid" data-valmsg-for="bookId" data-valmsg-replace="true"></span>
+    <input type="button" value="ARA" onclick="LoadBook()" />
+    <table id="bookTable">
+        <tr>
+            <td>ADI:</td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>Stok:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Lokasyon:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Ödünç:</td>
+            <td>
+                <input type="checkbox" disabled />
+            </td>
+        </tr>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>TC Kimlik No</th>
+                <th>Ad Soyad</th>
+                <th>Kiralama Tarihi</th>
+                <th>Geri Getirme Tarihi</th>
+                <th>Gecikme</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="rentalsTable"></tbody>
+    </table>
+    <input type="submit" id="button" disabled value="TAMAM" />
+</form>

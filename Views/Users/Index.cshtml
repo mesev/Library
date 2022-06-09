@@ -1,0 +1,23 @@
+﻿@{
+    System.Data.DataRowCollection userList = (System.Data.DataRowCollection)ViewData["userList"];
+
+}
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kullanıcı Adı</th>
+            <th>E-posta</th>
+        </tr>
+    </thead>
+    @foreach(Library.Models.Library.UserListRow userListRow in userList)
+            {
+        <tr>
+            <td>@userListRow.id.ToString()</td>
+            <td>@userListRow.UsersName</td>
+            <td>
+                <a href="mailto:@userListRow.UserEmail">@userListRow.UserEmail</a>
+            </td>
+        </tr>
+            }
+</table>

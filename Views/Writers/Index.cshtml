@@ -1,0 +1,33 @@
+﻿@{
+    System.Data.DataRowCollection writers = (System.Data.DataRowCollection)ViewData["writers"];
+
+}
+<table style="border:solid 1px black">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Yazar</th>
+            
+            <th>Mahlas</th>
+        </tr>
+    </thead>
+    @foreach (Library.Models.Library.WritersRow writersRow in writers)
+    {
+<tr>
+    <td style="border:solid 1px black">@writersRow.id.ToString()</td>
+    <td style="border:solid 1px black">@writersRow.WritersName
+
+        @if (writersRow.IsWritersSurnameNull() == false)
+        {
+            @writersRow.WritersSurname
+        }
+    </td>
+    <td style="border:solid 1px black">       
+        @if (writersRow.IsWritersAKANull() == false)
+        {
+            @writersRow.WritersAKA
+        }
+    </td>
+</tr>
+    }
+</table>

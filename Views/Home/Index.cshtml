@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+    System.Data.DataRowCollection results;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kütüphane</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+</head>
+<body>
+    <a href="~/home/login">Giriş</a>
+    <div>
+        <form action="~/" method="post">
+            <input type="text" name="keywords" placeholder="Aramayı  buradan yapınız " />
+            <input type="submit" value="ARA" />
+        </form>
+        <table style="border-collapse:collapse">
+            @if (ViewData["results"] != null)
+            {
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kitap</th>
+                    <th>Yazar</th>
+                    <th>Mahlas</th>
+                </tr>
+            </thead>
+                results = (System.Data.DataRowCollection)ViewData["results"];
+                foreach (Library.Models.Library.searchResultsRow resultsRow in results)
+                {
+        <tr>
+            <td style="border:1px solid black" >@resultsRow.Book.ToString()</td>
+            <td style="border:1px solid black">@resultsRow.BookName</td>
+            <td style="border:1px solid black">
+                @resultsRow.WritersName
+            @if (resultsRow.IsWritersSurnameNull() == false)
+            {
+                @resultsRow.WritersSurname
+            }
+            </td>
+            @if (resultsRow.IsWritersAKANull() == false)
+            {
+                <td style="border:1px solid black">@resultsRow.WritersAKA</td>
+}
+        </tr>
+                }
+            }
+        </table>
+       
+    </div>
+</body>
+</html>

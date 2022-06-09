@@ -1,0 +1,44 @@
+﻿@{ 
+    System.Data.DataRowCollection payment = (System.Data.DataRowCollection)ViewData["payment"];
+    string amount;
+}
+<script>
+    function Calendar()
+    {
+        $(".date").datepicker({ dateFormat: "dd-mm-yy" });
+    }
+    $(document).ready(Calendar)
+    
+    //$.ready(function () {$(".date").datepicker({ dateFormat: "dd-mm-yy" }) })
+
+    
+</script>
+<form  method="post">
+    <input type="text" name="startDate" class="date" value="@ViewData["startDate"]" />
+    <input type="text" name="endDate" class="date" value="@ViewData["endDate"]"/>
+    <input type="submit" value="TAMAM" />
+</form>
+<table>
+    <thead>
+        <tr>
+            <td>Kullanıcı Id</td>
+            <td>Kullanıcı Adı</td>
+            <td>Tutar</td>
+
+
+        </tr>
+    </thead>
+  <tbody>
+      @foreach(Library.Models.Library.PaymentRow paymentRow in payment)
+      {
+          amount = ((float)paymentRow.FeeSum / 100).ToString("F2");
+                <tr>
+                    <td>
+                        @paymentRow.CollectedBy.ToString()
+                    </td>
+                    <td>@paymentRow.RentalUser</td>
+                    <td>@amount</td>
+                </tr>
+            }
+  </tbody>
+</table>

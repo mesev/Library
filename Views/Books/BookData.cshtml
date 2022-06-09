@@ -1,0 +1,26 @@
+﻿@{
+    Library.Models.Library.BookDetailsTableRow bookRow = (Library.Models.Library.BookDetailsTableRow)ViewData["bookRow"];
+    string hirable = "uygun değil";
+    //string hirable = "";
+    string disabled = "true";
+
+    if (bookRow.Hirable == true)
+    {
+        if (bookRow.ActiveStock > 1)
+        {
+            //string hirable = "checked";
+            hirable = "uygun";
+            disabled = "false";
+        }
+    }
+}
+<script>
+    var buttonOK = document.getElementById("okButton");
+    buttonOK.disabled=@disabled
+</script>
+
+<div id="kitapadı">Kitap Adı:@bookRow.Name</div>
+<div id="activeStok">Aktif Stok:@bookRow.ActiveStock</div>
+<div id="closet">Dolap No:@bookRow.Closet</div>
+<div id="shelf">Raf No:@bookRow.Shelf</div>
+<div id="hirable">Kiralamaya Uygunluk:@hirable</div>

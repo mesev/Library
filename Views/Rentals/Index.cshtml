@@ -1,0 +1,127 @@
+﻿@{ ViewBag.Title = "Index"; }
+
+<h2>Ödünç Verme</h2>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function LoadBook() {
+        var idBook = document.getElementById("bookId");
+        $("#bookTable").load("@Url.Action("BookData","Books")/" + idBook.value);
+    }
+    function LoadMember() {
+        var idMember = document.getElementById("memberId");
+        $("#memberTable").load("@Url.Action("MemberData","Members")/" + idMember.value);
+    }
+</script>
+<form action="~/rentals/processrental" method="post">
+    <input type="number" name="bookId" id="bookId" placeholder="Kitap Id" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-range-min="1" />
+    <span class="field-validation-valid" data-valmsg-for="bookId" data-valmsg-replace="true"></span>
+    <input type="button" value="ARA" onclick="LoadBook()" />
+
+    <table id="bookTable">
+        <thead>
+            <tr>
+                <th>Kitap Id</th>
+                <th>Kitap Adı</th>
+                <th>Lokasyon</th>
+                <th>Stok</th>
+                <th>Kiralama Durumu</th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <input type="checkbox" disabled />
+            </td>
+        </tr>
+    </table>
+
+    <input type="number" name="memberId" id="memberId" placeholder="T.C. Kimlik No" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-range-min="10000000000"  data-val-range-max="99999999999"/>
+    <span class="field-validation-valid" data-valmsg-for="memberId" data-valmsg-replace="true"></span>
+    <input type="button" value="ARA" onclick="LoadMember()" />
+
+    <table>
+        <thead id="memberTable">
+            <tr>
+                <th>T.C. Kimlik No</th>
+                <td>
+                    <input type="number" name="memberId" placeholder="T.C. Kimlik No" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-range-min="10000000000"  data-val-range-max="99999999999" />
+                    <span class="field-validation-valid" data-valmsg-for="memberId" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Adı</th>
+                <td>
+                    <input type="text" name="memberName" id="memberName" placeholder="Adı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="50" />
+                    <span class="field-validation-valid" data-valmsg-for="memberName" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Soyadı</th>
+                <td>
+                    <input type="text" name="memberSurname" id="memberSurname" placeholder="Soyadı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="50" />
+                    <span class="field-validation-valid" data-valmsg-for="memberSurname" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Telefon</th>
+                <td>
+                    <input type="number" name="memberPhone" id="memberPhone" placeholder="Telefon" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-range-min="1000000000"  data-val-range-max="9999999999" />
+                    <span class="field-validation-valid" data-valmsg-for="memberPhone" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>E-Posta</th>
+                <td>
+                    <input type="text" name="memberEMail" id="memberEMail" placeholder="E Posta" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-email="Geçersiz e-mail" maxlength="100" />
+                    <span class="field-validation-valid" data-valmsg-for="memberEMail" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Cinsiyet</th>
+                <td>
+                    <label>Erkek</label>
+                    <input type="radio" name="gender" value="true" />
+                    <label>Kız</label>
+                    <input type="radio" name="gender" value="false" />
+                </td>
+            </tr>
+            <tr>
+                <th>Yasaklı</th>
+                <td>
+                    <input type="checkbox" name="banned" disabled />
+                </td>
+            </tr>
+            <tr>
+                <th>Adres</th>
+                <td>
+                    <textarea name="memberAddress" id="memberAddress" placeholder="Adres" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="200"></textarea>
+                    <span class="field-validation-valid" data-valmsg-for="memberAddress" data-valmsg-replace="true"></span>
+                </td>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th>Başlangıç:</th>
+                <td>
+                    @DateTime.Now.ToString("dd-MM-yyyy")
+                </td>
+            </tr>
+            <tr>
+                <th>Bitiş:</th>
+                <td>
+                    @DateTime.Now.AddDays(30).ToString("dd-MM-yyyy")
+                </td>
+            </tr>
+        </thead>
+    </table>
+    <input type="submit" value="TAMAM" id="okButton" />
+</form>
+@if(ViewData["error"] != null)
+{ 
+    <p>@ViewData["error"]</p>
+}

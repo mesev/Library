@@ -1,0 +1,68 @@
+﻿@{
+    Library.Models.Library.BookDetailsTableRow bookRow = (Library.Models.Library.BookDetailsTableRow)ViewData["bookRow"];
+    System.Data.DataRowCollection writers = (System.Data.DataRowCollection)ViewData["writers"];
+
+    string writerName;
+    string selected;
+    string hirable = "";
+
+    if (bookRow.Hirable == true)
+    {
+        hirable = "checked";
+    }
+
+
+
+    string keyword = "";
+    if (bookRow.IsKeywordsNull() == false)
+    {
+        keyword = bookRow.Keywords;
+    }
+
+
+
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<form action="~/books/processbook" method="post">
+    <input type="text" name="bookName" id="bookName" placeholder="Kitap Adı" data-val="true" data-val-required="Bu alan gerekli" maxlength="100" value="@bookRow.Name" />
+    <span class="field-validation-valid" data-valmsg-for="bookName" data-valmsg-replace="true"></span>
+    <input type="number" name="stok" id="stok" placeholder="Stok Sayısı" data-val="true" data-val-required="Bu alan gerekli" value="@bookRow.Stock.ToString()" />
+    <span class="field-validation-valid" data-valmsg-for="stok" data-valmsg-replace="true"></span>
+    <input type="number" name="activeStok" id="activeStok" placeholder="Aktif Stok Sayısı" data-val="true" data-val-required="Bu alan gerekli" data-val-range="Stoktan küçük olmalı" data-val-range-max="@bookRow.Stock.ToString()" value="@bookRow.ActiveStock" />
+    <span class="field-validation-valid" data-valmsg-for="activeStok" data-valmsg-replace="true"></span>
+    <input type="number" name="closet" id="closet" placeholder="Dolap Numarası" data-val="true" data-val-required="Bu alan gerekli" value="@bookRow.Closet.ToString()" />
+    <span class="field-validation-valid" data-valmsg-for="closet" data-valmsg-replace="true"></span>
+    <input type="number" name="shelf" id="shelf" placeholder="Raf Numarası" data-val="true" data-val-required="Bu alan gerekli" value="@bookRow.Shelf.ToString()" />
+    <span class="field-validation-valid" data-valmsg-for="shelf" data-valmsg-replace="true"></span>
+    <input type="text" name="keyword" id="keyword" placeholder="Keyword" data-val="true" value="@keyword" maxlength="100" />
+    <span class="field-validation-valid" data-valmsg-for="keyword" data-valmsg-replace="true"></span>
+    <select name="writer">
+
+        @foreach (Library.Models.Library.WritersRow writerRow in writers)
+        {
+            selected = "";
+            writerName = writerRow.WriterName;
+            if (writerRow.IsWriterSurnameNull() == false)
+            {
+                writerName = writerRow.WriterName + " " + writerRow.WriterSurname;
+            }
+            if (writerRow.IsWriterAKANull() == false)
+            {
+                writerName = writerName + "(" + writerRow.WriterAKA + ")";
+            }
+            if (bookRow.Writer == writerRow.Id)
+            {
+                selected = "selected";
+            }
+            <option value="@writerRow.Id.ToString()" @selected>@writerName</option>
+        }
+    </select>
+    <input type="checkbox" value="true" name="hirable" id="hirable" @hirable />
+    <input type="hidden" name="id" value="@bookRow.Id" />
+    <input type="submit" value="TAMAM" />
+</form>
+@if (ViewData["error"] != null)
+{
+    <span>@ViewData["error"]</span>
+}

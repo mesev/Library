@@ -1,0 +1,91 @@
+﻿@{ string name = "";
+    string surname = "";
+    string phone = "";
+    string eMail = "";
+    string female = "";
+    string male = "";
+    string banned = "";
+    string address = "";
+    string disable = "";
+
+    if (ViewData["memberRow"] != null)
+    {
+        disable = "disabled";
+        Library.Models.Library.MembersRow memberRow = (Library.Models.Library.MembersRow)ViewData["memberRow"];
+        name = memberRow.MemberName;
+        surname = memberRow.MemberSurname;
+        phone = memberRow.Phone.ToString();
+        eMail = memberRow.MemberEMail;
+        if (memberRow.IsGenderNull() == false)
+        {
+            if (memberRow.Gender == false)
+            {
+                female = "checked";
+            }
+            else
+            {
+                male = "checked";
+            }
+        }
+        if (memberRow.Banned == true)
+        {
+            banned = "checked";
+        }
+        address = memberRow.MemberAdress;
+    }
+    else
+    {
+    <tr>
+        <th>Kullanıcı Kaydı Yok</th>
+        <td></td>
+    </tr> } }
+<tr>
+    <th>Adı</th>
+    <td>
+        <input type="text" name="memberName" placeholder="Adı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="50" value="@name" @disable />
+        <span class="field-validation-valid" data-valmsg-for="memberName" data-valmsg-replace="true"></span>
+    </td>
+</tr>
+<tr>
+    <th>Soyadı</th>
+    <td>
+        <input type="text" name="memberSurname" placeholder="Soyadı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="50" value="@surname" @disable />
+        <span class="field-validation-valid" data-valmsg-for="memberSurname" data-valmsg-replace="true"></span>
+    </td>
+</tr>
+<tr>
+    <th>Telefon</th>
+    <td>
+        <input type="number" name="memberPhone" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-range-min="1000000000"  data-val-range-max="9999999999" value="@phone" @disable />
+        <span class="field-validation-valid" data-valmsg-for="memberPhone" data-valmsg-replace="true"></span>
+    </td>
+</tr>
+<tr>
+    <th>E-Posta</th>
+    <td>
+        <input type="text" name="memberEMail" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-email="Geçersiz e-mail" maxlength="100" value="@eMail" @disable />
+        <span class="field-validation-valid" data-valmsg-for="memberEMail" data-valmsg-replace="true"></span>
+    </td>
+</tr>
+<tr>
+    <th>Cinsiyet</th>
+    <td>
+        <label>Erkek</label>
+        <input type="radio" name="gender" value="true" @male @disable />
+        <label>Kız</label>
+        <input type="radio" name="gender" value="false" @female @disable />
+    </td>
+</tr>
+<tr>
+    <th>Yasaklı</th>
+    <td>
+        <input type="checkbox" name="banned" @banned @disable />
+    </td>
+</tr>
+<tr>
+    <th>Adres</th>
+    <td>
+        <textarea name="memberAddress" id="memberAddress" placeholder="Adres" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="200" @disable>@address</textarea>
+        <span class="field-validation-valid" data-valmsg-for="memberAdsress" data-valmsg-replace="true"></span>
+    </td>
+</tr>

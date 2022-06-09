@@ -1,0 +1,41 @@
+﻿
+@{
+    System.Data.DataRowCollection reportsRow = (System.Data.DataRowCollection)ViewData["bookReports"];
+}
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+    function LoadReports(id) {
+        $("#bas").load("@Url.Action("BookLoad","Reports")/" + id);
+        
+    }
+</script>
+<table>
+    <thead>
+        <tr>
+            <th>Kitap Id</th>
+            <th>Kitap Adı</th>
+            <th>Stok</th>
+            <th>Aktif Stok</th>
+            <th>Dışardaki Kitaplar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Models.Library.BooksReportsRow reportRow in reportsRow)
+        {
+            <tr id="bas-@reportRow.Id.ToString()" style="cursor:pointer" onclick="LoadReports(@reportRow.Id.ToString())">
+                <td>@reportRow.Id.ToString()</td>
+                <td>@reportRow.Name</td>
+                <td>@reportRow.Stock</td>
+                <td>@reportRow.ActiveStock</td>
+                <td>@reportRow.rentCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table id="bas">
+
+</table>
+

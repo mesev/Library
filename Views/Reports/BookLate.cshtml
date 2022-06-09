@@ -1,0 +1,73 @@
+﻿
+@{
+    System.Data.DataRowCollection receiveRow = (System.Data.DataRowCollection)ViewData["receiveRow"];
+    int latency;
+
+}
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf'
+               
+            ],
+            language: {
+            //"language": {
+            //    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            //    ,
+                paginate: {
+                    next : "İleri" ,
+                    previous: "Geri"
+                }
+
+            }
+        });
+    });
+</script>
+<table id="myTable">
+    <thead>
+        <tr>
+            <td>Üye adı soyadı</td>
+            <td>Kitap Id</td>
+            <td>Kitap adı</td>
+            <td>Mail</td>
+            <td> Phone</td>
+            <td>Alınma tarihi</td>
+            <td> DeadLine</td>
+            <td>Stok</td>
+            <td>Gecikme</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Models.Library.ReceiveRow receiveRow1 in receiveRow)
+        {
+            latency = (DateTime.Today - receiveRow1.DeadLine).Days;
+
+            if (latency >= 1)
+            {
+
+                <tr>
+                    <td>
+                        <a href="~/members/update/@receiveRow1.Member.ToString()">@receiveRow1.MemberName @receiveRow1.Surname</a>
+                    </td>
+                    <td>@receiveRow1.Id</td>
+                    <td>@receiveRow1.Name</td>
+
+                    <td>
+                        <a href="mailto:@receiveRow1.EMail">@receiveRow1.EMail</a>
+                    </td>
+                    <td>
+                        <a href="tel:@receiveRow1.Phone">@receiveRow1.Phone</a>
+                    </td>
+                    <td>@receiveRow1.RentedOn.ToString("dd-MM-yyyy")</td>
+                    <td>@receiveRow1.DeadLine.ToString("dd-MM-yyyy")</td>
+                    <td>@receiveRow1.ActiveStock.ToString()</td>
+                    <td>@latency.ToString() gün</td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
